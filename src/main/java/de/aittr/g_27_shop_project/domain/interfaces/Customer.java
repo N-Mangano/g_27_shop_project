@@ -4,6 +4,8 @@ public interface Customer {
 
   int getId();
 
+  void setName(String name);
+
   boolean isActive();
 
   String getName();
@@ -13,4 +15,7 @@ public interface Customer {
   void setId(int id);
 
   void setCart(Cart cart);
+
+  void setActive(boolean isActive);
+  void SetName(String name);
 }

@@ -1,4 +1,4 @@
-package de.aittr.g_27_shop_project.domain;
+package de.aittr.g_27_shop_project.domain.jdbc;
 
 import de.aittr.g_27_shop_project.domain.interfaces.Cart;
 import de.aittr.g_27_shop_project.domain.interfaces.Customer;
@@ -40,6 +40,11 @@ public class CommonCustomer implements Customer {
   }
 
   @Override
+  public void setName(String name) {
+
+  }
+
+  @Override
   public void setId(int id) {
     this.id = id;
   }
@@ -77,4 +82,15 @@ public class CommonCustomer implements Customer {
     return String.format("Покупатель: ИД - %d, имя - %s, активен - %s.",
         id, name, isActive ? "да" : "нет");
   }
+
+  @Override
+  public void setActive(boolean active) {
+    isActive = active;
+  }
+
+  @Override
+  public void SetName(String name) {
+    this.name = name;
+  }
+
 }

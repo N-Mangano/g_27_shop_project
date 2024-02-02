@@ -8,7 +8,14 @@ public interface Product {
 
   String getName();
 
+  void setName(String name);
+
   double getPrice();
 
   void setId(int id);
+
+  void setActive(boolean isActive);
+  void SetName(String name);
+
+  void setPrice(double price);
 }

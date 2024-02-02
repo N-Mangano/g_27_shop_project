@@ -1,4 +1,4 @@
-package de.aittr.g_27_shop_project.domain;
+package de.aittr.g_27_shop_project.domain.jdbc;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import de.aittr.g_27_shop_project.domain.interfaces.Product;
@@ -20,6 +20,25 @@ public class CommonProduct implements Product {
     this.name = name;
     this.price = price;
     this.isActive = true;
+  }
+
+  @Override
+  public void setActive(boolean active) {
+    isActive = active;
+  }
+
+  @Override
+  public void SetName(String name) {
+
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  @Override
+  public void setPrice(double price) {
+    this.price = price;
   }
 
   public CommonProduct(int id, String name, double price) {
