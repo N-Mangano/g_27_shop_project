@@ -2,18 +2,19 @@ package de.aittr.g_27_shop_project.services.jpa;
 
 import de.aittr.g_27_shop_project.domain.dto.ProductDto;
 import de.aittr.g_27_shop_project.domain.jpa.JpaProduct;
-import de.aittr.g_27_shop_project.exeption_handling.exceptions.FirstTestException;
+import de.aittr.g_27_shop_project.domain.jpa.Task;
 import de.aittr.g_27_shop_project.exeption_handling.exceptions.FourthTestException;
-import de.aittr.g_27_shop_project.exeption_handling.exceptions.SecondTestException;
 import de.aittr.g_27_shop_project.exeption_handling.exceptions.ThirdTestException;
 import de.aittr.g_27_shop_project.repositories.jpa.JpaProductRepository;
+import de.aittr.g_27_shop_project.scheduling.ScheduleExecutor;
 import de.aittr.g_27_shop_project.services.interfaces.ProductService;
 import de.aittr.g_27_shop_project.services.mapping.ProductMappingService;
 import jakarta.transaction.Transactional;
-import java.util.logging.Level;
+import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,9 +24,8 @@ public class JpaProductService implements ProductService {
 
   private JpaProductRepository repository;
   private ProductMappingService mappingService;
-//  private Logger logger = LogManager.getLogger(JpaProductService.class);
+  //    private Logger logger = LogManager.getLogger(JpaProductService.class);
   private Logger logger = LoggerFactory.getLogger(JpaProductService.class);
-
 
   public JpaProductService(JpaProductRepository repository, ProductMappingService mappingService) {
     this.repository = repository;
@@ -35,17 +35,19 @@ public class JpaProductService implements ProductService {
   @Override
   public ProductDto save(ProductDto product) {
     try {
-      JpaProduct entity= mappingService.mapDtoToEntity(product);
+      JpaProduct entity = mappingService.mapDtoToEntity(product);
       entity.setId(0);
       entity = repository.save(entity);
       return mappingService.mapEntityToDto(entity);
-    }catch (Exception e) {
-        throw new FourthTestException(e.getMessage());
+    } catch (Exception e) {
+      throw new FourthTestException(e.getMessage());
     }
   }
 
   @Override
   public List<ProductDto> getAllActiveProducts() {
+    Task task = new Task("Method getAllActiveProducts called");
+//    ScheduleExecutor.scheduleTaskExecution(task);
     return repository.findAll()
         .stream()
         .filter(x -> x.isActive())
@@ -56,14 +58,13 @@ public class JpaProductService implements ProductService {
   @Override
   public ProductDto getActiveProductById(int id) {
 
-//    logger.log(Level.INFO, String.format("Запрошен продукт с ИД %d.", id));
-//    logger.log(Level.WARN, String.format("Запрошен продукт с ИД %d.", id));
-//    logger.log(Level.ERROR, String.format("Запрошен продукт с ИД %d.", id));
+//        logger.log(Level.INFO, String.format("Запрошен продукт с ИД %d.", id));
+//        logger.log(Level.WARN, String.format("Запрошен продукт с ИД %d.", id));
+//        logger.log(Level.ERROR, String.format("Запрошен продукт с ИД %d.", id));
 
-//    logger.info(String.format("Запрошен продукт с ИД %d.", id));
-//    logger.warn(String.format("Запрошен продукт с ИД %d.", id));
-//    logger.error(String.format("Запрошен продукт с ИД %d.", id));
-
+//        logger.info(String.format("Запрошен продукт с ИД %d.", id));
+//        logger.warn(String.format("Запрошен продукт с ИД %d.", id));
+//        logger.error(String.format("Запрошен продукт с ИД %d.", id));
 
     JpaProduct product = repository.findById(id).orElse(null);
 
@@ -71,7 +72,7 @@ public class JpaProductService implements ProductService {
       return mappingService.mapEntityToDto(product);
     }
 
-    throw new ThirdTestException("Продукт с указанным ID отсутствует в БД.");
+    throw new ThirdTestException("Продукт с указанным ИД отсутствует в БД.");
   }
 
   @Override

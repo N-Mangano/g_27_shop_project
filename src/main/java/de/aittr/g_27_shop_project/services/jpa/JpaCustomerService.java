@@ -1,51 +1,39 @@
-package de.aittr.g_27_shop_project.services.jdbc;
+package de.aittr.g_27_shop_project.services.jpa;
 
 import de.aittr.g_27_shop_project.domain.dto.CustomerDto;
-import de.aittr.g_27_shop_project.domain.interfaces.Customer;
-import de.aittr.g_27_shop_project.domain.interfaces.Product;
+import de.aittr.g_27_shop_project.domain.jpa.JpaCustomer;
+import de.aittr.g_27_shop_project.exeption_handling.exceptions.CustomerNotFoundException;
 import de.aittr.g_27_shop_project.repositories.interfaces.CustomerRepository;
+import de.aittr.g_27_shop_project.repositories.jpa.JpaCustomerRepository;
 import de.aittr.g_27_shop_project.services.interfaces.CustomerService;
+import java.util.List;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.NoSuchElementException;
+@Service
+public class JpaCustomerService implements CustomerService {
+  private JpaCustomerRepository repository;
 
-//@Service
-public class CommonCustomerService implements CustomerService {
-
-  private CustomerRepository repository;
-
-  public CommonCustomerService(CustomerRepository repository) {
+  public JpaCustomerService(JpaCustomerRepository repository) {
     this.repository = repository;
   }
 
   @Override
   public CustomerDto save(CustomerDto customer) {
-
-    if (customer == null) {
-      throw new IllegalArgumentException("Сохраняемый покупатель не может быть null.");
-    }
-
-//    if (customer.getName() == null || customer.getName().isEmpty()) {
-//      throw new IllegalArgumentException("Имя сохраняемого покупателя не может быть пустым.");
-//    }
-    // TODO
     return null;
   }
 
   @Override
   public List<CustomerDto> getAllActiveCustomers() {
-    List<Customer> customers = repository.getAll();
-
-    if (customers.isEmpty()) {
-      throw new NoSuchElementException("В базе данных нет покупателей");
-    }
-    // TODO
     return null;
   }
 
   @Override
   public CustomerDto getActiveCustomerById(int id) {
+    JpaCustomer customer = repository.findById(id).orElse(null);
+
+    if (customer == null || !customer.isActive()) {
+      throw new CustomerNotFoundException("Такой покупатель не существует!");
+    }
     return null;
   }
 

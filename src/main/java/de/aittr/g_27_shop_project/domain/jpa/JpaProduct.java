@@ -2,12 +2,8 @@ package de.aittr.g_27_shop_project.domain.jpa;
 
 import de.aittr.g_27_shop_project.domain.interfaces.Product;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
 import java.util.Objects;
 
 @Entity
@@ -19,9 +15,16 @@ public class JpaProduct implements Product {
   @Column(name = "id")
   private int id;
 
+  // Test - OK
+  // TEST - X
+  // Tes - X
+  // test - X
+  // TEst - X
+  // Test@ - X
+  // Test7 - X
   @Column(name = "name")
-  @NotNull
-  @NotBlank
+//    @NotNull
+//    @NotBlank
   @Pattern(regexp = "[A-Z][a-z]{3,}")
   private String name;
 
@@ -85,7 +88,7 @@ public class JpaProduct implements Product {
 
   @Override
   public void SetName(String name) {
-    
+
   }
 
   @Override

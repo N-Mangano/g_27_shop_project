@@ -36,7 +36,13 @@ public class ProductDto {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name, price);
+    int result;
+    long temp;
+    result = id;
+    result = 31 * result + (name != null ? name.hashCode() : 0);
+    temp = Double.doubleToLongBits(price);
+    result = 31 * result + (int) (temp ^ (temp >>> 32));
+    return result;
   }
 
   @Override
